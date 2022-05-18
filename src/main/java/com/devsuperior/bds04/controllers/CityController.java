@@ -4,7 +4,9 @@ import com.devsuperior.bds04.dto.CityDTO;
 import com.devsuperior.bds04.services.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -21,8 +23,11 @@ public class CityController {
 
     @GetMapping
     public ResponseEntity<Page<CityDTO>> findAll(Pageable pageable) {
-        Page<CityDTO> list = cityService.findAll(pageable);
-        return ResponseEntity.ok(list);
+//        Page<CityDTO> list = cityService.findAll(pageable);
+//        return ResponseEntity.ok(list);
+        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("name"));
+        Page<CityDTO> list = cityService.findAll(pageRequest);
+        return ResponseEntity.ok().body(list);
     }
 
     @GetMapping(value = "/{id}")

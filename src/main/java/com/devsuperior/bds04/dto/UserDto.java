@@ -13,7 +13,7 @@ public class UserDto implements Serializable {
 
     private Long id;
 
-    @NotBlank(message = "Campo obrigatório")
+    @NotBlank(message = "Campo requerido")
     private String firstName;
 
     private String lastName;
