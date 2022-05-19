@@ -23,8 +23,6 @@ public class CityController {
 
     @GetMapping
     public ResponseEntity<Page<CityDTO>> findAll(Pageable pageable) {
-//        Page<CityDTO> list = cityService.findAll(pageable);
-//        return ResponseEntity.ok(list);
         PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("name"));
         Page<CityDTO> list = cityService.findAll(pageRequest);
         return ResponseEntity.ok().body(list);
@@ -36,7 +34,7 @@ public class CityController {
     }
 
     @PostMapping
-    public ResponseEntity<CityDTO> create(@Valid @RequestBody CityDTO cityDto) {
+    public ResponseEntity<CityDTO> create(@RequestBody @Valid CityDTO cityDto) {
         cityDto = cityService.save(cityDto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
                 .buildAndExpand(cityDto.getId()).toUri();
