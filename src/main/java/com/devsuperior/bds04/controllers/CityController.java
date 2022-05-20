@@ -1,6 +1,7 @@
 package com.devsuperior.bds04.controllers;
 
 import com.devsuperior.bds04.dto.CityDTO;
+import com.devsuperior.bds04.dto.UserDto;
 import com.devsuperior.bds04.services.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/cities")
@@ -22,9 +24,9 @@ public class CityController {
     private CityService cityService;
 
     @GetMapping
-    public ResponseEntity<Page<CityDTO>> findAll(Pageable pageable) {
+    public ResponseEntity<List<CityDTO>> findAll(Pageable pageable) {
         PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("name"));
-        Page<CityDTO> list = cityService.findAll(pageRequest);
+        List<CityDTO> list = cityService.findAll(pageRequest).getContent();
         return ResponseEntity.ok().body(list);
     }
 
